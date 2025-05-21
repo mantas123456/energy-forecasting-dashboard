@@ -1,0 +1,30 @@
+project_name: energy_forecasting_dashboard
+sectors: ["Residential", "Factory", "EV_Charging", "School"]
+
+data_paths:
+  raw: data/raw
+  processed: data/processed
+  synthetic: data/synthetic
+
+model_paths:
+  output: models/
+  results: results/
+  predictions: results/predictions
+  plots: results/plots
+
+modeling:
+  horizon_hours: 24
+  evaluation_metrics: ["rmse", "mae"]
+
+prophet:
+  daily_seasonality: true
+  yearly_seasonality: false
+  changepoint_prior_scale: 0.05
+
+xgboost:
+  n_estimators: 100
+  max_depth: 5
+  learning_rate: 0.1
+
+linear_regression:
+  fit_intercept: true
