@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "energy-forecast"
+version = "3.0.0"
+description = "Day-ahead energy demand forecasting with a leak-free rolling backtest"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Mantas Valantinavičius" }]
+license = { text = "MIT" }
+dependencies = [
+  "numpy>=1.26",
+  "pandas>=2.1",
+  "scikit-learn>=1.4",
+  "xgboost>=2.0",
+  "PyYAML>=6.0",
+  "matplotlib>=3.8",
+]
+
+[project.optional-dependencies]
+app = ["streamlit>=1.35", "plotly>=5.20"]
+dev = ["pytest>=8", "ruff>=0.5"]
+
+[project.scripts]
+energy-forecast = "energy_forecast.pipeline:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

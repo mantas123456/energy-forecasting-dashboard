@@ -1,0 +1,81 @@
+sector,fold,model,mae,rmse,skill_vs_naive
+EV_Charging,1,Naive (yesterday),7.5463,12.8082,-0.2877
+EV_Charging,1,Naive (last week),5.8605,10.9463,0.0
+EV_Charging,1,Ridge regression,4.8875,8.514,0.166
+EV_Charging,1,XGBoost,3.7344,7.4772,0.3628
+EV_Charging,2,Naive (yesterday),7.2747,11.027,-0.0129
+EV_Charging,2,Naive (last week),7.1818,12.5051,0.0
+EV_Charging,2,Ridge regression,5.427,8.1484,0.2443
+EV_Charging,2,XGBoost,4.6689,8.62,0.3499
+EV_Charging,3,Naive (yesterday),5.6601,8.2099,-0.4705
+EV_Charging,3,Naive (last week),3.8491,5.4531,0.0
+EV_Charging,3,Ridge regression,3.856,5.1735,-0.0018
+EV_Charging,3,XGBoost,3.2685,4.737,0.1508
+EV_Charging,4,Naive (yesterday),5.4843,7.63,-0.4208
+EV_Charging,4,Naive (last week),3.8602,5.3571,0.0
+EV_Charging,4,Ridge regression,3.6201,4.7171,0.0622
+EV_Charging,4,XGBoost,3.0162,4.2433,0.2186
+EV_Charging,5,Naive (yesterday),6.8749,9.7068,-0.283
+EV_Charging,5,Naive (last week),5.3585,7.7733,0.0
+EV_Charging,5,Ridge regression,4.1802,5.449,0.2199
+EV_Charging,5,XGBoost,3.0996,4.4111,0.4216
+Factory,1,Naive (yesterday),92.2217,138.9682,-1.3074
+Factory,1,Naive (last week),39.9682,78.8305,0.0
+Factory,1,Ridge regression,30.7587,42.6574,0.2304
+Factory,1,XGBoost,16.7649,24.2938,0.5805
+Factory,2,Naive (yesterday),75.8416,120.8697,-1.4643
+Factory,2,Naive (last week),30.776,47.1918,0.0
+Factory,2,Ridge regression,26.7381,32.6369,0.1312
+Factory,2,XGBoost,14.6125,20.1387,0.5252
+Factory,3,Naive (yesterday),66.7624,106.21,-2.6268
+Factory,3,Naive (last week),18.4079,25.667,0.0
+Factory,3,Ridge regression,24.4712,29.7126,-0.3294
+Factory,3,XGBoost,14.526,20.0988,0.2109
+Factory,4,Naive (yesterday),68.1346,108.6982,-2.4151
+Factory,4,Naive (last week),19.9511,36.4765,0.0
+Factory,4,Ridge regression,23.9271,34.925,-0.1993
+Factory,4,XGBoost,15.2756,27.8023,0.2343
+Factory,5,Naive (yesterday),93.491,140.0212,-0.9075
+Factory,5,Naive (last week),49.0132,91.1503,0.0
+Factory,5,Ridge regression,31.3819,45.0196,0.3597
+Factory,5,XGBoost,14.6357,20.9164,0.7014
+Residential,1,Naive (yesterday),0.17,0.2508,-0.142
+Residential,1,Naive (last week),0.1489,0.222,0.0
+Residential,1,Ridge regression,0.1355,0.1876,0.0899
+Residential,1,XGBoost,0.0983,0.1422,0.3396
+Residential,2,Naive (yesterday),0.144,0.2167,0.0
+Residential,2,Naive (last week),0.1528,0.2217,-0.0608
+Residential,2,Ridge regression,0.125,0.1705,0.1325
+Residential,2,XGBoost,0.0862,0.1267,0.4017
+Residential,3,Naive (yesterday),0.1309,0.1959,-0.0335
+Residential,3,Naive (last week),0.1266,0.1863,0.0
+Residential,3,Ridge regression,0.1023,0.15,0.1921
+Residential,3,XGBoost,0.0952,0.1378,0.248
+Residential,4,Naive (yesterday),0.1369,0.2218,-0.0555
+Residential,4,Naive (last week),0.1297,0.2073,0.0
+Residential,4,Ridge regression,0.1085,0.1764,0.1635
+Residential,4,XGBoost,0.1027,0.1662,0.2076
+Residential,5,Naive (yesterday),0.1992,0.3245,-0.0824
+Residential,5,Naive (last week),0.1841,0.3096,0.0
+Residential,5,Ridge regression,0.1434,0.2416,0.2208
+Residential,5,XGBoost,0.1104,0.2045,0.4002
+School,1,Naive (yesterday),19.5742,40.2347,-1.8795
+School,1,Naive (last week),6.7978,19.8626,0.0
+School,1,Ridge regression,7.5926,16.4088,-0.1169
+School,1,XGBoost,2.7309,5.9423,0.5983
+School,2,Naive (yesterday),15.1762,33.4398,-2.9229
+School,2,Naive (last week),3.8686,7.0003,0.0
+School,2,Ridge regression,5.3024,7.1888,-0.3706
+School,2,XGBoost,2.2677,4.3733,0.4138
+School,3,Naive (yesterday),14.4615,31.2007,-3.6093
+School,3,Naive (last week),3.1375,6.1636,0.0
+School,3,Ridge regression,4.8974,6.8078,-0.561
+School,3,XGBoost,2.1679,4.2115,0.309
+School,4,Naive (yesterday),13.948,30.3424,-3.8338
+School,4,Naive (last week),2.8855,5.5155,0.0
+School,4,Ridge regression,4.3193,6.0769,-0.4969
+School,4,XGBoost,1.8731,3.4715,0.3509
+School,5,Naive (yesterday),18.1647,36.7936,-1.267
+School,5,Naive (last week),8.0125,21.3595,0.0
+School,5,Ridge regression,7.464,16.8073,0.0685
+School,5,XGBoost,2.1761,4.0928,0.7284

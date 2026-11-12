@@ -1,0 +1,58 @@
+# Pipeline settings. Every run with the same seed gives the same data and results.
+
+seed: 42
+start_date: "2024-01-01"
+days: 365
+
+# Forecast horizon in hours. Features only use values at least this many hours old,
+# so the model never sees anything it would not have at forecast time.
+horizon_hours: 24
+
+sectors:
+  Residential:
+    base_kw: 1.2           # average hourly demand, kW
+    temp_slope: 0.035      # extra demand per degC away from comfort temperature
+    weekend_factor: 1.10
+    holiday_factor: 1.15
+  School:
+    base_kw: 45.0
+    temp_slope: 0.025
+    weekend_factor: 0.15
+    holiday_factor: 0.10
+  Factory:
+    base_kw: 320.0
+    temp_slope: 0.010
+    weekend_factor: 0.45
+    holiday_factor: 0.30
+  EV_Charging:
+    base_kw: 60.0
+    temp_slope: 0.005
+    weekend_factor: 0.85
+    holiday_factor: 0.80
+
+temperature:
+  comfort_c: 21.0
+  daily_swing_c: 5.0
+  noise_std_c: 1.5
+
+# Grid carbon intensity in gCO2e/kWh, varying by time of day.
+emission_factor_g_per_kwh:
+  night: 450      # 00:00-05:59
+  midday: 300     # 10:00-16:59, solar output highest
+  default: 396
+
+noise_std_fraction: 0.06   # random noise as a fraction of demand
+
+anomalies:
+  per_sector: 6            # spikes, dropouts and level shifts per sector
+
+backtest:
+  n_splits: 5              # rolling-origin folds
+  test_days: 28            # length of each test window
+
+xgboost:
+  n_estimators: 400
+  max_depth: 6
+  learning_rate: 0.05
+  subsample: 0.9
+  colsample_bytree: 0.9
