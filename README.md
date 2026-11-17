@@ -95,7 +95,7 @@ results/                  metrics, predictions and plots from the last run
 
 v2 computed rolling averages that included the hour being predicted, which leaked the
 answer into the features and made the reported errors look better than they were. v3
-rebuilds the pipeline with horizon-aware lags, per-sector features, real multi-sector data,
+rebuilds the pipeline with horizon-aware lags, per-sector features, synthetic multi-sector data,
 naive baselines and a rolling backtest, and adds tests that would catch the leak.
 
 ## How this was built
