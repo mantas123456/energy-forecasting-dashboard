@@ -98,5 +98,10 @@ answer into the features and made the reported errors look better than they were
 rebuilds the pipeline with horizon-aware lags, per-sector features, real multi-sector data,
 naive baselines and a rolling backtest, and adds tests that would catch the leak.
 
+## How this was built
+
+I designed the analysis and checked the results. I used Claude Code as
+a coding assistant.
+
 ---
 Mantas Valantinavičius · [github.com/mantas123456](https://github.com/mantas123456)
