@@ -1,0 +1,12 @@
+{
+  "zone": "LT",
+  "source": "csv",
+  "unit": "MWh",
+  "timezone": "Europe/Vilnius",
+  "horizon_hours": 48,
+  "data_start_utc": "2025-01-01 00:00",
+  "data_end_utc": "2026-11-19 11:00",
+  "hours": 16500,
+  "folds": 12,
+  "test_days": 28
+}

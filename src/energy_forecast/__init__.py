@@ -1,3 +1,3 @@
-"""Day-ahead energy demand forecasting on synthetic multi-sector data."""
+"""Day-ahead electricity load forecasting for Lithuania, benchmarked against the TSO."""
 
-__version__ = "3.0.0"
+__version__ = "4.0.0"

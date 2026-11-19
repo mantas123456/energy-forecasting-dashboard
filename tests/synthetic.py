@@ -1,4 +1,8 @@
-"""Generate realistic synthetic hourly demand for several building sectors.
+"""Synthetic hourly demand for several building sectors: a test fixture.
+
+The project runs on real Lithuanian load data (see energy_forecast.data). This generator
+gives the tests a small, reproducible data set with known structure, so the feature,
+model and backtest code can be tested without a database or network access.
 
 Each sector gets its own daily load shape, a weekend and holiday response, a
 temperature response (heating and cooling around a comfort temperature),
@@ -209,7 +213,7 @@ def generate(cfg: dict[str, Any]) -> pd.DataFrame:
     ts = pd.date_range(cfg["start_date"], periods=cfg["days"] * 24, freq="h")
     temp = simulate_temperature(ts, cfg, rng)
     hol = holiday_flags(ts)
-    weekend = np.asarray(ts.dayofweek) >= 5
+    weekend = np.asarray(ts.day_of_week) >= 5
     hours = np.asarray(ts.hour)
     comfort = cfg["temperature"]["comfort_c"]
 
@@ -229,7 +233,7 @@ def generate(cfg: dict[str, Any]) -> pd.DataFrame:
                 {
                     "timestamp": ts,
                     "sector": sector,
-                    "energy_kwh": demand.round(3),  # hourly average kW == kWh per hour
+                    "demand": demand.round(3),  # kWh per hour (hourly average kW)
                     "temperature_c": temp.round(1),
                     "holiday": hol,
                     "carbon_kgco2e": (demand * emission_factor(hours, cfg) / 1000).round(3),
