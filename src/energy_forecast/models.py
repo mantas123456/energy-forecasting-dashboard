@@ -11,6 +11,8 @@ from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 from xgboost import XGBRegressor
 
+from .features import REFERENCE
+
 
 class Forecaster(Protocol):
     name: str
@@ -20,10 +22,12 @@ class Forecaster(Protocol):
 
 
 class SeasonalNaive:
-    """Repeats an earlier value: same hour yesterday, or same hour last week.
+    """Repeats an earlier value: the same hour `lag_hours` ago.
 
-    Any model worth using has to beat both.
+    Any model worth using has to beat it.
     """
+
+    kind = "naive"
 
     def __init__(self, lag_hours: int, name: str):
         self.col = f"lag_{lag_hours}h"
@@ -36,7 +40,24 @@ class SeasonalNaive:
         return X[self.col].to_numpy()
 
 
+class TSOForecast:
+    """The TSO's own published day-ahead forecast, read from the data, not fitted.
+
+    It is scored like a model so the real models can be compared against it.
+    """
+
+    kind = "reference"
+    name = "TSO day-ahead forecast"
+
+    def fit(self, X: pd.DataFrame, y: pd.Series) -> TSOForecast:
+        return self
+
+    def predict(self, X: pd.DataFrame) -> np.ndarray:
+        return X[REFERENCE].to_numpy(dtype=float)
+
+
 class RidgeModel:
+    kind = "model"
     name = "Ridge regression"
 
     def __init__(self) -> None:
@@ -51,6 +72,7 @@ class RidgeModel:
 
 
 class XGBModel:
+    kind = "model"
     name = "XGBoost"
 
     def __init__(self, params: dict[str, Any], seed: int):
@@ -66,13 +88,25 @@ class XGBModel:
         return np.clip(self.model.predict(X), 0, None)
 
 
-def make_models(cfg: dict[str, Any]) -> list[Forecaster]:
+def naive_name(lag_hours: int) -> str:
+    if lag_hours == 24:
+        return "Naive (yesterday)"
+    if lag_hours == 168:
+        return "Naive (last week)"
+    return f"Naive ({lag_hours // 24} days ago)"
+
+
+def make_models(cfg: dict[str, Any], tso: bool = False) -> list[Forecaster]:
+    """Naive baselines, ridge and XGBoost; plus the TSO forecast when `tso` is true."""
     h = cfg["horizon_hours"]
-    if h != 24:
-        raise ValueError("the naive baselines assume a 24-hour horizon")
-    return [
-        SeasonalNaive(h, "Naive (yesterday)"),
-        SeasonalNaive(168, "Naive (last week)"),
+    if h % 24 or not 24 <= h < 168:
+        raise ValueError("the naive baselines need a horizon of 24, 48, ... or 144 hours")
+    models: list[Forecaster] = [
+        SeasonalNaive(h, naive_name(h)),
+        SeasonalNaive(168, naive_name(168)),
         RidgeModel(),
         XGBModel(cfg["xgboost"], cfg["seed"]),
     ]
+    if tso:
+        models.append(TSOForecast())
+    return models

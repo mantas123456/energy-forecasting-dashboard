@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from energy_forecast.features import TARGET, build_features, feature_columns
+from energy_forecast.features import TARGET, build_features, calendar_features, feature_columns
 
 
 def make_frame(n_hours=24 * 30, sectors=("A", "B")):
@@ -45,3 +45,24 @@ def test_rows_without_history_are_dropped():
     feats = build_features(make_frame(), 24)
     assert not feats.isna().any().any()
     assert feats.groupby("sector")["timestamp"].min().nunique() == 1
+
+
+def test_calendar_uses_local_time_for_utc_timestamps():
+    # 22:00 UTC on a Sunday in winter is 00:00 on Monday in Vilnius (UTC+2).
+    ts = pd.Series(pd.to_datetime(["2026-01-04 22:00"], utc=True))
+    local = calendar_features(ts, "Europe/Vilnius").iloc[0]
+    utc = calendar_features(ts).iloc[0]
+    assert local["hour_sin"] == pytest.approx(0.0) and local["hour_cos"] == pytest.approx(1.0)
+    assert local["is_weekend"] == 0
+    assert utc["is_weekend"] == 1  # without the timezone it would still be Sunday
+
+
+def test_reference_forecast_is_carried_but_not_a_feature():
+    df = make_frame(sectors=("A",)).drop(columns="temperature_c")
+    df["tso_forecast"] = df[TARGET] + 1.0
+    df.loc[df.index[-5:], "tso_forecast"] = np.nan
+    feats = build_features(df, 48)
+    assert "tso_forecast" in feats and "tso_forecast" not in feature_columns(feats)
+    assert feats["timestamp"].max() == df["timestamp"].max()  # NaN reference keeps the row
+    assert "temperature_c" not in feature_columns(feats)  # no temperature in the input
+    assert {"lag_48h", "lag_72h", "lag_168h"} <= set(feature_columns(feats))

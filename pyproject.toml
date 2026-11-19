@@ -4,8 +4,8 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "energy-forecast"
-version = "3.0.0"
-description = "Day-ahead energy demand forecasting with a leak-free rolling backtest"
+version = "4.0.0"
+description = "Day-ahead electricity load forecasting for Lithuania, benchmarked against the TSO forecast"
 readme = "README.md"
 requires-python = ">=3.10"
 authors = [{ name = "Mantas Valantinavičius" }]
@@ -17,11 +17,13 @@ dependencies = [
   "xgboost>=2.0",
   "PyYAML>=6.0",
   "matplotlib>=3.8",
+  "holidays>=0.50",
 ]
 
 [project.optional-dependencies]
 app = ["streamlit>=1.35", "plotly>=5.20"]
-dev = ["pytest>=8", "ruff>=0.5"]
+db = ["SQLAlchemy>=2.0", "psycopg[binary]>=3.1"]
+dev = ["pytest>=8", "ruff>=0.5", "SQLAlchemy>=2.0"]
 
 [project.scripts]
 energy-forecast = "energy_forecast.pipeline:main"
